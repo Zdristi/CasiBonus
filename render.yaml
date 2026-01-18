@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: casi-bonus
+    env: node
+    region: frankfurt  # Указываем регион для размещения
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true  # Включаем авто-деплой при пуше в репозиторий
+    healthCheckPath: /
+    domains:
+      - casi-bonus.onrender.com  # Замените на ваш домен
