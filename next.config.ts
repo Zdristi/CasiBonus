@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
+  output: 'standalone', // Указываем standalone output для Render
   // Убедимся, что приложение может работать за reverse proxy
   async headers() {
     return [
