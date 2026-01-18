@@ -4,10 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
-  // Устанавливаем порт и хост для Render
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
   // Убедимся, что приложение может работать за reverse proxy
   async headers() {
     return [
@@ -22,6 +18,8 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Указываем внешние пакеты для серверных компонентов
+  serverExternalPackages: [],
 };
 
 export default nextConfig;

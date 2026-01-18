@@ -54,10 +54,10 @@ const CasinoCard = ({ casino }: CasinoCardProps) => {
 
 // Главная страница со списком казино
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState<GameCategory | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<GameCategory | 'All' | null>(null);
 
   // Фильтрация казино по выбранной категории
-  const filteredCasinos = selectedCategory
+  const filteredCasinos = selectedCategory && selectedCategory !== 'All'
     ? mockCasinos.filter(casino =>
         casino.categories && casino.categories.includes(selectedCategory)
       )
