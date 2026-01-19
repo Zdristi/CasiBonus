@@ -20,7 +20,7 @@ const PlatformOptionPage = () => {
           </p>
         </header>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Доступные казино</h2>
           <p className="text-gray-600 dark:text-gray-300">
             На этой странице будут отображаться казино, подходящие для {platform?.toString()} с опцией {option?.toString()}.
@@ -30,14 +30,14 @@ const PlatformOptionPage = () => {
           </p>
         </div>
 
-        <div className="text-center">
+        <div className="flex justify-center gap-4">
           <Link href={`/platform/${platform}`}>
-            <div className="inline-block px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors mr-4">
+            <div className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-md">
               Назад к опциям
             </div>
           </Link>
           <Link href="/">
-            <div className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <div className="px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white rounded-xl hover:from-gray-600 hover:to-gray-800 transition-all transform hover:scale-105 shadow-md">
               На главную
             </div>
           </Link>

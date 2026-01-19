@@ -79,28 +79,19 @@ export default function Home() {
 
         <MainPlatformNavigation />
 
-        <CategoryFilter
-          selectedCategory={selectedCategory}
-          onCategoryChange={(category) => setSelectedCategory(category)}
-        />
+        {/* Убираем CategoryFilter с главной страницы, чтобы не было конфликта с фильтрами */}
 
-        {filteredCasinos.length > 0 ? (
+        {mockCasinos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCasinos.map((casino) => (
+            {mockCasinos.map((casino) => (
               <CasinoCard key={casino.id} casino={casino} />
             ))}
           </div>
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-600 dark:text-gray-400 text-lg">
-              К сожалению, не найдено казино с категорией "{selectedCategory}"
+              К сожалению, не найдено казино
             </p>
-            <button
-              onClick={() => setSelectedCategory(null)}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Показать все казино
-            </button>
           </div>
         )}
       </div>

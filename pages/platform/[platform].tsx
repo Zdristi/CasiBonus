@@ -39,11 +39,11 @@ const PlatformPage = () => {
             <Link key={option} href={`/platform/${platform}/${option.toLowerCase()}`}>
               <div
                 onClick={() => setSelectedOption(option)}
-                className={`px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 cursor-pointer ${
+                className={`px-6 py-4 rounded-xl text-lg font-semibold transition-all duration-300 cursor-pointer transform hover:scale-105 shadow-lg ${
                   selectedOption === option
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
-                } shadow-md`}
+                    ? 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-xl'
+                    : 'bg-white text-gray-800 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 {option}
               </div>
@@ -53,7 +53,7 @@ const PlatformPage = () => {
 
         <div className="text-center">
           <Link href="/">
-            <div className="inline-block px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+            <div className="inline-block px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white rounded-xl hover:from-gray-600 hover:to-gray-800 transition-all transform hover:scale-105 shadow-md">
               Назад к главной
             </div>
           </Link>
