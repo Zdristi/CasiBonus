@@ -11,46 +11,33 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Компонент провайдера темы
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // При инициализации проверяем сохраненную тему или системные настройки
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme') as Theme | null;
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if (savedTheme) {
-        return savedTheme;
-      } else if (systemPrefersDark) {
-        return 'dark';
-      }
-    }
-    return 'light'; // значение по умолчанию для SSR
-  });
+  const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
-    // При монтировании компонента применяем тему к DOM
+    // Проверяем сохраненную тему в localStorage при загрузке
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      // Проверяем системную тему
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  }, []);
+
+  useEffect(() => {
+    // Применяем тему к DOM и сохраняем в localStorage
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => {
-      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
-
-      // Обновляем класс темы в DOM
-      if (newTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-
-      // Сохраняем тему в localStorage
-      localStorage.setItem('theme', newTheme);
-
-      return newTheme;
-    });
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 
   return (
