@@ -3,6 +3,7 @@ import { Casino, GameCategory } from '@/types/casino';
 import { mockCasinos } from '@/data/casinos';
 import ThemeToggle from '@/components/ThemeToggle';
 import CategoryFilter from '@/components/CategoryFilter';
+import MainPlatformNavigation from '@/components/MainPlatformNavigation';
 import { useState } from 'react';
 
 // Типизированный интерфейс для казино
@@ -75,6 +76,8 @@ export default function Home() {
             Лучшие лицензированные онлайн казино с эксклюзивными бонусами и промокодами
           </p>
         </header>
+
+        <MainPlatformNavigation />
 
         <CategoryFilter
           selectedCategory={selectedCategory}

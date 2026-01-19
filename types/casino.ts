@@ -12,6 +12,9 @@ export interface Bonus {
 // Тип для категории игры
 export type GameCategory = 'Crash' | 'Roulette' | 'Slots' | 'Blackjack' | 'Poker' | 'Baccarat' | 'Live Casino';
 
+// Тип для основных игровых платформ
+export type MainPlatform = 'CS2' | 'Dota2' | 'Rust' | 'USD/RUB/Crypto';
+
 // Тип для казино
 export interface Casino {
   id: string;
