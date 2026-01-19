@@ -4,6 +4,7 @@ import { mockCasinos } from '@/data/casinos';
 import ThemeToggle from '@/components/ThemeToggle';
 import CategoryFilter from '@/components/CategoryFilter';
 import MainPlatformNavigation from '@/components/MainPlatformNavigation';
+import SearchBar from '@/components/SearchBar';
 import { useState } from 'react';
 
 // Типизированный интерфейс для казино
@@ -56,18 +57,23 @@ const CasinoCard = ({ casino }: CasinoCardProps) => {
 // Главная страница со списком казино
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<GameCategory | 'All' | null>(null);
+  const [searchResults, setSearchResults] = useState<Casino[]>(mockCasinos);
 
   // Фильтрация казино по выбранной категории
   const filteredCasinos = selectedCategory && selectedCategory !== 'All'
-    ? mockCasinos.filter(casino =>
+    ? searchResults.filter(casino =>
         casino.categories && casino.categories.includes(selectedCategory)
       )
-    : mockCasinos;
+    : searchResults;
+
+  const handleSearchResults = (results: Casino[]) => {
+    setSearchResults(results);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
-        <header className="mb-12 text-center relative">
+        <header className="mb-8 text-center relative">
           <div className="absolute top-0 right-0">
             <ThemeToggle />
           </div>
@@ -77,13 +83,15 @@ export default function Home() {
           </p>
         </header>
 
+        <SearchBar casinos={mockCasinos} onSearchResults={handleSearchResults} />
+
         <MainPlatformNavigation />
 
         {/* Убираем CategoryFilter с главной страницы, чтобы не было конфликта с фильтрами */}
 
-        {mockCasinos.length > 0 ? (
+        {filteredCasinos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockCasinos.map((casino) => (
+            {filteredCasinos.map((casino) => (
               <CasinoCard key={casino.id} casino={casino} />
             ))}
           </div>
