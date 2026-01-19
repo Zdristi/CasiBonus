@@ -11,31 +11,29 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Компонент провайдера темы
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false); // Для предотвращения гидратации
+  const [theme, setTheme] = useState<Theme>(() => {
+    // При инициализации проверяем сохраненную тему или системные настройки
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as Theme | null;
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme) {
+        return savedTheme;
+      } else if (systemPrefersDark) {
+        return 'dark';
+      }
+    }
+    return 'light'; // значение по умолчанию для SSR
+  });
 
   useEffect(() => {
-    // При монтировании компонента проверяем сохраненную тему
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    let initialTheme: Theme = 'light';
-    if (savedTheme) {
-      initialTheme = savedTheme;
-    } else if (systemPrefersDark) {
-      initialTheme = 'dark';
-    }
-
-    setTheme(initialTheme);
-    setMounted(true);
-
-    // Применяем тему к DOM
-    if (initialTheme === 'dark') {
+    // При монтировании компонента применяем тему к DOM
+    if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, []);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme(prevTheme => {
@@ -54,11 +52,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       return newTheme;
     });
   };
-
-  // Пока не смонтирован, не отображаем ничего (чтобы избежать проблем с гидратацией)
-  if (!mounted) {
-    return <>{children}</>;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
