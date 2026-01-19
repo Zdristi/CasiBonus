@@ -12,6 +12,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // Компонент провайдера темы
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('light');
+  const [mounted, setMounted] = useState(false); // Для предотвращения гидратации
 
   useEffect(() => {
     // При монтировании компонента проверяем сохраненную тему
@@ -26,6 +27,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     }
 
     setTheme(initialTheme);
+    setMounted(true);
 
     // Применяем тему к DOM
     if (initialTheme === 'dark') {
@@ -52,6 +54,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       return newTheme;
     });
   };
+
+  // Пока не смонтирован, не отображаем ничего (чтобы избежать проблем с гидратацией)
+  if (!mounted) {
+    return <>{children}</>;
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
